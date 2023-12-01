@@ -1,4 +1,4 @@
-import { CloseSVGIcon } from '@react-md/material-icons';
+import { X as IconX } from 'lucide-react';
 import Modal from 'react-modal';
 
 export interface ModalProps {
@@ -41,7 +41,7 @@ const CustomModal = (props: ModalProps) => {
         <header className="flex justify-between">
           <h1 className="text-2xl font-bold">{props.title}</h1>
           {!props.hideCloseButton && (
-            <CloseSVGIcon
+            <IconX
               className="w-8 cursor-pointer"
               onClick={props.close}
             />

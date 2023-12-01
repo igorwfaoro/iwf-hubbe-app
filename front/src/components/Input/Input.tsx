@@ -33,7 +33,7 @@ export default function Input({
         ref={inputRef}
         {...otherProps}
         className={twMerge(
-          'border border-gray-300 rounded-md p-4 focus:outline-none',
+          'border border-gray-300 p-4 rounded-md focus:outline-none',
           inputClassName
         )}
       />

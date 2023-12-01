@@ -1,3 +1,3 @@
 export interface LoginDto {
-  username: string;
+    username: string;
 }

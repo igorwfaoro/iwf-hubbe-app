@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode, RefObject } from 'react';
+import { ReactNode, RefObject } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 interface CardProps {
@@ -16,7 +16,7 @@ export default function Card({
 }: CardProps) {
   return (
     <div
-      className={twMerge('rounded-2xl shadow-lg', className)}
+      className={twMerge('rounded-2xl shadow-xl bg-cover', className)}
       ref={elementRef}
       style={{ backgroundImage: bgImageUrl ? `url(${bgImageUrl})` : '' }}
     >

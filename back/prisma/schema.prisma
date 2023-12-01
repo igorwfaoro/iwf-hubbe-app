@@ -11,15 +11,19 @@ datasource db {
 }
 
 model User {
-  id              String           @id @default(auto()) @map("_id") @db.ObjectId
-  username        String
-  fullName        String
-  secretRoomState SecretRoomState?
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  username String
+  fullName String
+  room     Room?
 }
 
-model SecretRoomState {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  key           String  @unique
+model Room {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String?
+  content     String
+  isSecret    Boolean
+  image       String?
 
   currentUserId String? @unique @db.ObjectId
   currentUser   User?   @relation(fields: [currentUserId], references: [id])

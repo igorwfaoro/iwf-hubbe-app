@@ -1,35 +1,47 @@
-'use client';
-
 import { createContext, useContext } from 'react';
-import { ToastContainer, TypeOptions, toast } from 'react-toastify';
+import { toast, ToastContainer, ToastPosition, TypeOptions } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const TOAST_DURATION = 4000;
+const TOAST_DURATION = 5000;
+const TOAST_POSITION: ToastPosition = 'top-right';
 
 export interface IToastProvider {
-  open: (message: string, type?: TypeOptions) => void;
+    show: (message: string, type?: TypeOptions) => void;
+    // showHttpError: (error: any) => void;
 }
 
 interface ToastProviderProps {
-  children: JSX.Element | JSX.Element[];
+    children: JSX.Element;
 }
 
 const ToastContext = createContext<IToastProvider | undefined>(undefined);
 
-const ToastProvider = ({ children }: ToastProviderProps) => {
-  const open = (message: string, type: TypeOptions = 'info') => {
-    toast(message, {
-      type,
-      autoClose: TOAST_DURATION
-    });
-  };
+const ToastProvider = (props: ToastProviderProps) => {
+    // const [isShowing, setIsShowing] = useState(false);
 
-  return (
-    <ToastContext.Provider value={{ open }}>
-      {children}
-      <ToastContainer />
-    </ToastContext.Provider>
-  );
+    const show = (message: string, type: TypeOptions = 'info') => {
+        toast(message, {
+            autoClose: TOAST_DURATION,
+            position: TOAST_POSITION,
+            type
+        });
+    };
+
+    // const showHttpError = (error: any) => {
+    //     show(t(`apiErrors.${HttpHelper.mapErrorResponse(error).message}`), 'error');
+    // };
+
+    return (
+        <ToastContext.Provider
+            value={{
+                show
+                // showHttpError
+            }}
+        >
+            {props.children}
+            <ToastContainer />
+        </ToastContext.Provider>
+    );
 };
 
 export default ToastProvider;
