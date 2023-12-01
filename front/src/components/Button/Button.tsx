@@ -27,6 +27,7 @@ type ButtonProps = ComponentProps<'button'> &
     link?: string;
     linkTarget?: HTMLAttributeAnchorTarget;
     color?: string;
+    loading?: boolean;
   };
 
 export default function Button({
@@ -39,7 +40,8 @@ export default function Button({
   disabled,
   className,
   color,
-  style
+  style,
+  loading
 }: ButtonProps) {
   const content = (
     <>
@@ -51,6 +53,12 @@ export default function Button({
 
   const buttonStyle: CSSProperties = { ...style, backgroundColor: color };
 
+  const Loading = () => (
+    <div className="animate-spin h-5 w-5 border-2 border-t-transparent" />
+  );
+
+  const ButtonContent = () => <>{loading ? Loading : content}</>;
+
   return link ? (
     <Link
       className={buttonClasses}
@@ -58,7 +66,7 @@ export default function Button({
       href={link}
       target={linkTarget}
     >
-      {content}
+      <ButtonContent />
     </Link>
   ) : (
     <button
@@ -66,8 +74,9 @@ export default function Button({
       style={buttonStyle}
       onClick={onClick}
       disabled={disabled}
+      type="button"
     >
-      {content}
+      <ButtonContent />
     </button>
   );
 }

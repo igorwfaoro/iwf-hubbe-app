@@ -1,13 +1,7 @@
-export const API_BASE_URL = '/api';
+export const API_BASE_URL = 'http://127.0.0.1:3333'//process.env.API_URL;
 
 export const API_URLS = {
-  events: {
-    search: () => `${API_BASE_URL}/events/search`,
-    recommended: () => `${API_BASE_URL}/events/recommended`
-  },
-  invitations: {
-    getByDescription: () => `${API_BASE_URL}/invitations/get-by-description`,
-    updateGuestsConfirmations: () =>
-      `${API_BASE_URL}/invitations/update-guests-confirmations`
+  auth: {
+    login: () => `${API_BASE_URL}/v1/auth/login`,
   }
 };

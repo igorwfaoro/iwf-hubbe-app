@@ -9,7 +9,7 @@ const authService = createAuthService();
 
 AuthController.post('/login', validateInput(authValidator.login), async (req, res, next) => {
     try {
-        const result = authService.login(req.body);
+        const result = await authService.login(req.body);
         res.json(result);
     } catch (error) {
         next(error);
