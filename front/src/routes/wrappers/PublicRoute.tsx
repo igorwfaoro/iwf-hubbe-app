@@ -1,9 +1,7 @@
-interface PublicRouteProps {
-    children: JSX.Element;
-}
+import { Outlet } from 'react-router-dom';
 
-const PublicRoute = (props: PublicRouteProps) => {
-    return props.children;
+const PublicRoute = () => {
+    return <Outlet />;
 };
 
 export default PublicRoute;

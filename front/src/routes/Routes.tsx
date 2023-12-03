@@ -4,29 +4,30 @@ import PrivateRoute from './wrappers/PrivateRoute';
 import PublicRoute from './wrappers/PublicRoute';
 import Navbar from '../components/Navbar/Navbar';
 import Home from '../pages/Home/Home';
+import RoomRoute from './wrappers/RoomRoute';
+import Room from '../pages/Room/Room';
 
 const Routes = () => {
     return (
         <BrowserRouter>
             <Navbar />
             <BrowserRoutes>
-                <Route
-                    path="/login"
-                    element={
-                        <PublicRoute>
-                            <Login />
-                        </PublicRoute>
-                    }
-                />
+                <Route element={<PrivateRoute />}>
+                    <Route path="/home" element={<Home />} />
 
-                <Route
-                    path="/home"
-                    element={
-                        <PrivateRoute>
-                            <Home />
-                        </PrivateRoute>
-                    }
-                />
+                    <Route
+                        path="/room/:id"
+                        element={
+                            <RoomRoute>
+                                <Room />
+                            </RoomRoute>
+                        }
+                    />
+                </Route>
+
+                <Route element={<PublicRoute />}>
+                    <Route path="/login" element={<Login />} />
+                </Route>
 
                 <Route path="/" element={<Navigate to="/home" replace />} />
             </BrowserRoutes>

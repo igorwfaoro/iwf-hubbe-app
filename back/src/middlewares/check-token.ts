@@ -11,6 +11,7 @@ export function checkToken(req: Request, res: Response, next: NextFunction) {
         jwtPayload = <any>jwt.verify(token.split(' ')[1], ENV.JWT_SECRET);
         res.locals.jwtPayload = jwtPayload;
     } catch (error) {
+        console.error(error);
         next(new AuthException());
     }
 

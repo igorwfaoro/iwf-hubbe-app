@@ -1,23 +1,32 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
-interface PublicRouteProps {
-    children: JSX.Element;
-}
-
-const PrivateRoute = (props: PublicRouteProps) => {
+const PrivateRoute = () => {
     const auth = useAuth();
-    const navigate = useNavigate();
 
-    useEffect(() => {
-        if (!auth.isLogged()) {
-            auth.logout();
-            navigate('/login');
-        }
-    }, []);
+    const isLogged = auth.isLogged();
 
-    return props.children;
+    if (!isLogged) auth.logout();
+
+    return auth.isLogged() ? <Outlet /> : <Navigate to="/login" replace />;
+
+    // const auth = useAuth();
+    // const navigate = useNavigate();
+
+    // const [isLogged, setIsAllowed] = useState<boolean>();
+
+    // useEffect(() => {
+    //     setIsAllowed(auth.isLogged());
+    // }, []);
+
+    // useEffect(() => {
+    //     if (isLogged === false) {
+    //         auth.logout();
+    //         navigate('/login');
+    //     }
+    // }, [isLogged]);
+
+    // return isLogged ? props.children : <></>;
 };
 
 export default PrivateRoute;

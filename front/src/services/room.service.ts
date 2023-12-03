@@ -15,9 +15,9 @@ export const createRoomService = () => {
             .get<RoomDetail>(API_URLS.rooms.getById(id))
             .then((response) => response.data);
 
-    const isInUse = (id: string): Promise<RoomIsInUse[]> =>
+    const isInUse = (id: string): Promise<RoomIsInUse> =>
         http()
-            .get<RoomIsInUse[]>(API_URLS.rooms.isInUse(id))
+            .get<RoomIsInUse>(API_URLS.rooms.isInUse(id))
             .then((response) => response.data);
 
     return {

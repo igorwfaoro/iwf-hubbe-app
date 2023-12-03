@@ -7,6 +7,6 @@ export const API_URLS = {
     rooms: {
         getAll: () => `${API_BASE_URL}/v1/rooms`,
         getById: (id: string) => `${API_BASE_URL}/v1/rooms/${id}`,
-        isInUse: (id: string) => `${API_BASE_URL}/v1/rooms/${id}/in-use`
+        isInUse: (id: string) => `${API_BASE_URL}/v1/rooms/${id}/isInUse`
     }
 };
