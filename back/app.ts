@@ -7,13 +7,19 @@ import { onError } from './src/util/functions/on-error';
 import { ENV } from './src/env';
 import { createServer } from 'node:http';
 import { Server } from 'socket.io';
-import { createSocketActions } from './src/socket-actions';
+import { createSocketEvents } from './src/socket-events';
 
 console.log('Initializing...');
 
 const app = express();
 const server = createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+    cors: {
+        origin: '*'
+    },
+    // pingInterval: 10000,
+    // pingTimeout: 5000
+});
 
 app.use(cors());
 app.options('*', cors());
@@ -24,7 +30,7 @@ app.use(express.json());
 app.use(routes);
 app.use(onError);
 
-createSocketActions(io);
+createSocketEvents(io);
 
 const HOST = ENV.HOST || 'localhost';
 const PORT = ENV.PORT || 3333;

@@ -2,13 +2,13 @@ import { Router } from 'express';
 import { validateInput } from '../middlewares/validate-input';
 import { createRoomService } from '../services/room.service';
 import { roomValidator } from '../validators/room.validator';
-import { checkToken } from '../middlewares/check-token';
+import { checkHttpToken } from '../middlewares/check-token';
 
 const RoomController = Router();
 
 const roomService = createRoomService();
 
-RoomController.get('/', [checkToken], async (req, res, next) => {
+RoomController.get('/', [checkHttpToken], async (req, res, next) => {
     try {
         const result = await roomService.getAll();
         res.json(result);
@@ -19,7 +19,7 @@ RoomController.get('/', [checkToken], async (req, res, next) => {
 
 RoomController.get(
     '/:id',
-    [checkToken, validateInput(roomValidator.getById)],
+    [checkHttpToken, validateInput(roomValidator.getById)],
     async (req, res, next) => {
         try {
             const result = await roomService.getById(String(req.params.id));
@@ -32,7 +32,7 @@ RoomController.get(
 
 RoomController.get(
     '/:id/isInUse',
-    [checkToken, validateInput(roomValidator.isInUse)],
+    [checkHttpToken, validateInput(roomValidator.isInUse)],
     async (req, res, next) => {
         try {
             const result = await roomService.isInUse(String(req.params.id));

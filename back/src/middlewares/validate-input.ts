@@ -9,8 +9,6 @@ export function validateInput(schema: Joi.ObjectSchema) {
             stripUnknown: true
         });
 
-        console.log('error', error);
-
         if (error) {
             next(new InputValidationException(error.message));
         } else {

@@ -10,5 +10,6 @@ export const ERROR_MESSAGES = {
     DATABASE_ERROR: 'Database Error',
     USER_NOT_FOUND: 'User Not Found',
     OPERATION_NOT_PERMITTED: 'Operation Not Permitted',
-    USER_WITHOUT_ACCESS: 'User Without Access'
+    USER_WITHOUT_ACCESS: 'User Without Access',
+    ROOM_IS_IN_USE: 'Room is in use'
 };

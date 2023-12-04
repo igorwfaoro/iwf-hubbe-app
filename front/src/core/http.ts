@@ -5,10 +5,6 @@ const storage = createStorage();
 
 const { token } = storage.getData();
 
-export const makeAuth = (username: string, password: string) => {
-    return `Basic ${btoa(`${username}:${password}`)}`;
-};
-
 export const http = () => {
     const instance = axios.create({
         headers: {

@@ -3,6 +3,7 @@ import { NotFoundException } from '../util/exceptions/not-found.exception';
 import { RoomIsInUseViewModel } from '../models/view-models/room-is-in-use.view-model';
 import { RoomViewModel } from '../models/view-models/room.view-model';
 import { RoomDetailViewModel } from '../models/view-models/room-detail.view-model';
+import { RoomIsInUseException } from '../util/exceptions/room-is-in-use.exception';
 
 export const createRoomService = () => {
     const getAll = async (): Promise<RoomViewModel[]> => {
@@ -30,9 +31,42 @@ export const createRoomService = () => {
         return RoomIsInUseViewModel.fromModel(room);
     };
 
+    const setCurrentUser = async (
+        id: string,
+        userId: string | null
+    ): Promise<RoomDetailViewModel> => {
+        const room = await prisma.room.findUnique({
+            where: { id }
+        });
+
+        if (!room) throw new NotFoundException();
+
+        if (room.isSecret) {
+            if (!!room.currentUserId) throw new RoomIsInUseException();
+
+            await prisma.room.update({
+                where: { id },
+                data: {
+                    currentUserId: userId
+                }
+            });
+        }
+
+        return RoomDetailViewModel.fromModel(room);
+    };
+
+    const removeUserFromRooms = async (userId: string) => {
+        await prisma.room.updateMany({
+            where: { currentUserId: userId },
+            data: { currentUserId: null }
+        });
+    };
+
     return {
         getAll,
         getById,
-        isInUse
+        isInUse,
+        setCurrentUser,
+        removeUserFromRooms
     };
 };
