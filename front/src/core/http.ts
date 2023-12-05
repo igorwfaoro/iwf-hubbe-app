@@ -3,9 +3,9 @@ import { createStorage } from './storage';
 
 const storage = createStorage();
 
-const { token } = storage.getData();
-
 export const http = () => {
+    const { token } = storage.getData();
+
     const instance = axios.create({
         headers: {
             'Content-Type': 'application/json',

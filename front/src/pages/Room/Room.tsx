@@ -7,6 +7,9 @@ import { mapHttpError } from '../../core/http';
 import { createSocket } from '../../core/socket';
 import { useAuth } from '../../contexts/AuthContext';
 import { SocketEvent } from '../../util/enums/socket-event';
+import Skeleton from '../../components/Skeleton/Skeleton';
+import Page from '../../components/Page/Page';
+import Card from '../../components/Card/Card';
 
 interface RoomProps {}
 
@@ -53,21 +56,42 @@ export default function Room({}: RoomProps) {
     };
 
     const renderLoading = () => {
-        return <div>Loading...</div>;
+        return (
+            <div className="space-y-2">
+                <Skeleton className="h-7 w-[70%] md:w-[30%]" />
+                <Skeleton className="h-5 w-[50%] md:w-[20%]" />
+
+                {Array.from({ length: 4 }).map((_, i) => (
+                    <Skeleton
+                        key={i}
+                        className="h-4"
+                        style={{ width: `${30 + Math.random() * 30}%` }}
+                    />
+                ))}
+            </div>
+        );
     };
 
     return (
-        <div className="p-4 pt-20">
-            {loading ? (
-                renderLoading()
-            ) : (
-                <div className="space-y-2">
-                    <h1 className="text-3xl font-bold">{room?.name}</h1>
-                    <h2 className="text-xl">{room?.description}</h2>
+        <Page className="flex flex-col items-center">
+            <Card className="w-[95%] md:w-[85%] lg:w-[70%]">
+                {loading ? (
+                    renderLoading()
+                ) : (
+                    <>
+                        <div
+                            style={{ backgroundImage: `url(${room?.image})` }}
+                            className="w-full h-64 rounded-t-2xl bg-center bg-cover"
+                        />
+                        <div className="space-y-2 p-4">
+                            <h1 className="text-3xl font-bold">{room?.name}</h1>
+                            <h2 className="text-xl">{room?.description}</h2>
 
-                    <div dangerouslySetInnerHTML={{ __html: room?.content! }} />
-                </div>
-            )}
-        </div>
+                            <div dangerouslySetInnerHTML={{ __html: room?.content! }} />
+                        </div>
+                    </>
+                )}
+            </Card>
+        </Page>
     );
 }

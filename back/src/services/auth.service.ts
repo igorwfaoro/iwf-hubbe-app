@@ -5,7 +5,7 @@ import { ENV } from '../env';
 import { prisma } from '../database/db';
 import { LoginInputModel } from '../models/input-models/login.input-model';
 import { AuthException } from '../util/exceptions/auth.exception';
-import { LoginResultViewModel } from '../models/view-models/login-result.view-model';
+import { AuthViewModel } from '../models/view-models/auth.view-model';
 import { User } from '@prisma/client';
 
 export const createAuthService = () => {
@@ -18,7 +18,17 @@ export const createAuthService = () => {
 
         if (!user) throw new AuthException();
 
-        return LoginResultViewModel.create(UserViewModel.fromModel(user), makeToken(user));
+        return AuthViewModel.create(UserViewModel.fromModel(user), makeToken(user));
+    };
+
+    const refresh = async (userId: string) => {
+        const user = await prisma.user.findUnique({
+            where: { id: userId }
+        });
+
+        if (!user) throw new AuthException();
+
+        return AuthViewModel.create(UserViewModel.fromModel(user), makeToken(user));
     };
 
     const makeToken = (user: User): string => {
@@ -32,6 +42,7 @@ export const createAuthService = () => {
     };
 
     return {
-        login
+        login,
+        refresh
     };
 };

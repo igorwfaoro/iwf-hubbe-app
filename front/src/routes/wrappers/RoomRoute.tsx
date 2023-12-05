@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { createRoomService } from '../../services/room.service';
 import { useToast } from '../../contexts/ToastContext';
 import { useLoader } from '../../contexts/LoaderContext';
-import { RoomIsInUse } from '../../models/api/room-is-in-use';
+import { RoomIsBlocked } from '../../models/api/room-is-blocked';
 
 interface RoomRouteProps {
     children: React.ReactNode;
@@ -17,17 +17,17 @@ export default function RoomRoute({ children }: RoomRouteProps) {
     const loader = useLoader();
     const toast = useToast();
 
-    const [room, setRoom] = useState<RoomIsInUse>();
+    const [room, setRoom] = useState<RoomIsBlocked>();
 
     useEffect(() => {
         loader.show();
         roomService
-            .isInUse(String(roomId))
+            .isBlocked(String(roomId))
             .then((response) => {
                 setRoom(response);
 
-                if (response.isSecret && response.isInUse) {
-                    toast.show('Room is in use', 'info');
+                if (response.isSecret && response.isBlocked) {
+                    toast.show('Room is blocked', 'info');
                     navigate('/');
                 }
             })
@@ -40,5 +40,5 @@ export default function RoomRoute({ children }: RoomRouteProps) {
 
     if (!room) return <>Loading...</>;
 
-    if (room.isSecret && !room.isInUse) return children;
+    if (room.isSecret && !room.isBlocked) return children;
 }

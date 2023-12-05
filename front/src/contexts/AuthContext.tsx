@@ -1,14 +1,15 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useMemo } from 'react';
 import { createAuthService } from '../services/auth.service';
 import { createStorage } from '../core/storage';
 import { User } from '../models/api/user';
 import { LoginDto } from '../models/dto/login.dto';
 
 export interface IAuthProvider {
-    isLogged(): boolean;
-    getLoggedUser(): User | undefined;
-    login(params: LoginDto): Promise<void>;
-    logout(): Promise<void>;
+    isLogged: () => boolean;
+    getLoggedUser: () => User | undefined;
+    login: (params: LoginDto) => Promise<void>;
+    refresh: () => void;
+    logout: () => Promise<void>;
 }
 
 interface AuthProviderProps {
@@ -42,6 +43,18 @@ const AuthProvider = (props: AuthProviderProps) => {
         });
     };
 
+    const refresh = (): Promise<void> => {
+        return new Promise((resolve, reject) => {
+            authService
+                .refresh()
+                .then((response) => {
+                    storage.setData(response);
+                    resolve();
+                })
+                .catch((error) => reject(error));
+        });
+    };
+
     const logout = (): Promise<void> => {
         return new Promise((resolve) => {
             setTimeout(() => {
@@ -51,18 +64,20 @@ const AuthProvider = (props: AuthProviderProps) => {
         });
     };
 
-    return (
-        <AuthContext.Provider
-            value={{
-                isLogged,
-                getLoggedUser,
-                login,
-                logout
-            }}
-        >
-            {props.children}
-        </AuthContext.Provider>
+    if (isLogged()) refresh();
+
+    const returnValue = useMemo(
+        () => ({
+            isLogged,
+            getLoggedUser,
+            login,
+            refresh,
+            logout
+        }),
+        []
     );
+
+    return <AuthContext.Provider value={returnValue}>{props.children}</AuthContext.Provider>;
 };
 
 export default AuthProvider;

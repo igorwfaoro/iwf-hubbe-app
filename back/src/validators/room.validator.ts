@@ -6,7 +6,7 @@ export const roomValidator = {
             id: Joi.string().required()
         }).required()
     }),
-    isInUse: Joi.object({
+    isBlocked: Joi.object({
         params: Joi.object({
             id: Joi.string().required()
         }).required()

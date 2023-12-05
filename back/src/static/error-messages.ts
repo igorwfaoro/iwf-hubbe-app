@@ -11,5 +11,5 @@ export const ERROR_MESSAGES = {
     USER_NOT_FOUND: 'User Not Found',
     OPERATION_NOT_PERMITTED: 'Operation Not Permitted',
     USER_WITHOUT_ACCESS: 'User Without Access',
-    ROOM_IS_IN_USE: 'Room is in use'
+    ROOM_IS_BLOCKED: 'Room is blocked'
 };

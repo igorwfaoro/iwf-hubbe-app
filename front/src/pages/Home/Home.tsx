@@ -7,6 +7,7 @@ import { useLoader } from '../../contexts/LoaderContext';
 import { useToast } from '../../contexts/ToastContext';
 import { mapHttpError } from '../../core/http';
 import { ShieldAlert as IconShield } from 'lucide-react';
+import Page from '../../components/Page/Page';
 
 interface HomeProps {}
 
@@ -34,7 +35,7 @@ export default function Home({}: HomeProps) {
     const title = `Welcome ${auth.getLoggedUser()?.fullName}`;
 
     return (
-        <div className="p-4 pt-20">
+        <Page>
             <h1 className="text-4xl font-bold">{title}</h1>
 
             <div className="grid grid-cols-6 mt-4 space-x-4">
@@ -56,6 +57,6 @@ export default function Home({}: HomeProps) {
                     </a>
                 ))}
             </div>
-        </div>
+        </Page>
     );
 }

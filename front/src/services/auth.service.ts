@@ -1,15 +1,21 @@
 import { API_URLS } from '../constants/api-urls';
 import { http } from '../core/http';
-import { LoginResult } from '../models/api/login-result';
+import { AuthResult } from '../models/api/auth-result';
 import { LoginDto } from '../models/dto/login.dto';
 
 export const createAuthService = () => {
-    const login = (dto: LoginDto): Promise<LoginResult> =>
+    const login = (dto: LoginDto): Promise<AuthResult> =>
         http()
-            .post<LoginResult>(API_URLS.auth.login(), dto)
+            .post<AuthResult>(API_URLS.auth.login(), dto)
+            .then((response) => response.data);
+
+    const refresh = (): Promise<AuthResult> =>
+        http()
+            .post<AuthResult>(API_URLS.auth.refresh())
             .then((response) => response.data);
 
     return {
-        login
+        login,
+        refresh
     };
 };

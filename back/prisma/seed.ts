@@ -5,11 +5,17 @@ async function main() {
     await prisma.room.deleteMany();
     await prisma.user.deleteMany();
 
-    await prisma.user.create({
-        data: {
-            username: 'igor',
-            fullName: 'Igor Wilian Faoro'
-        }
+    await prisma.user.createMany({
+        data: [
+            {
+                username: 'spongebob',
+                fullName: 'SpongeBob SquarePants'
+            },
+            {
+                username: 'patrick',
+                fullName: 'Patrick Star'
+            }
+        ]
     });
 
     await prisma.room.createMany({

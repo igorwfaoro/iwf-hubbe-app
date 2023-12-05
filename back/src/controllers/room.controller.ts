@@ -3,6 +3,7 @@ import { validateInput } from '../middlewares/validate-input';
 import { createRoomService } from '../services/room.service';
 import { roomValidator } from '../validators/room.validator';
 import { checkHttpToken } from '../middlewares/check-token';
+import { TokenHelper } from '../util/helpers/token.helper';
 
 const RoomController = Router();
 
@@ -31,11 +32,14 @@ RoomController.get(
 );
 
 RoomController.get(
-    '/:id/isInUse',
-    [checkHttpToken, validateInput(roomValidator.isInUse)],
+    '/:id/isBlocked',
+    [checkHttpToken, validateInput(roomValidator.isBlocked)],
     async (req, res, next) => {
         try {
-            const result = await roomService.isInUse(String(req.params.id));
+            const result = await roomService.isBlocked(
+                String(req.params.id),
+                TokenHelper.getPayload(res).user.id
+            );
             res.json(result);
         } catch (error) {
             next(error);

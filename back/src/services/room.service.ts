@@ -1,9 +1,9 @@
 import { prisma } from '../database/db';
 import { NotFoundException } from '../util/exceptions/not-found.exception';
-import { RoomIsInUseViewModel } from '../models/view-models/room-is-in-use.view-model';
+import { RoomIsBlockedViewModel } from '../models/view-models/room-is-blocked.view-model';
 import { RoomViewModel } from '../models/view-models/room.view-model';
 import { RoomDetailViewModel } from '../models/view-models/room-detail.view-model';
-import { RoomIsInUseException } from '../util/exceptions/room-is-in-use.exception';
+import { RoomIsBlockedException } from '../util/exceptions/room-is-blocked.exception';
 
 export const createRoomService = () => {
     const getAll = async (): Promise<RoomViewModel[]> => {
@@ -21,14 +21,19 @@ export const createRoomService = () => {
         return RoomDetailViewModel.fromModel(room);
     };
 
-    const isInUse = async (id: string): Promise<RoomIsInUseViewModel> => {
+    const isBlocked = async (
+        id: string,
+        userId: string
+    ): Promise<RoomIsBlockedViewModel> => {
         const room = await prisma.room.findUnique({
             where: { id }
         });
 
         if (!room) throw new NotFoundException();
 
-        return RoomIsInUseViewModel.fromModel(room);
+        const isBlocked = !!room.currentUserId && room.currentUserId !== userId;
+
+        return RoomIsBlockedViewModel.create(room, isBlocked);
     };
 
     const setCurrentUser = async (
@@ -42,14 +47,19 @@ export const createRoomService = () => {
         if (!room) throw new NotFoundException();
 
         if (room.isSecret) {
-            if (!!room.currentUserId) throw new RoomIsInUseException();
+            // if room.currentUserId is defined and is not equal userId then room is blocked
+            if (!!room.currentUserId && room.currentUserId !== userId)
+                throw new RoomIsBlockedException();
 
-            await prisma.room.update({
-                where: { id },
-                data: {
-                    currentUserId: userId
-                }
-            });
+            // if room.currentUserId is not equal userId then define it
+            if (room.currentUserId !== userId) {
+                await prisma.room.update({
+                    where: { id },
+                    data: {
+                        currentUserId: userId
+                    }
+                });
+            }
         }
 
         return RoomDetailViewModel.fromModel(room);
@@ -65,7 +75,7 @@ export const createRoomService = () => {
     return {
         getAll,
         getById,
-        isInUse,
+        isBlocked,
         setCurrentUser,
         removeUserFromRooms
     };
