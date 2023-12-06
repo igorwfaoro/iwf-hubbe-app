@@ -44,16 +44,16 @@ const Routes = () => {
                 <Route element={<PrivateRoute />}>
                     {routes
                         .filter((route) => route.type === 'private')
-                        .map((route) => (
-                            <Route path={route.path} element={route.element} />
+                        .map((route, i) => (
+                            <Route key={i} path={route.path} element={route.element} />
                         ))}
                 </Route>
 
                 <Route element={<PublicRoute />}>
                     {routes
                         .filter((route) => route.type === 'public')
-                        .map((route) => (
-                            <Route path={route.path} element={route.element} />
+                        .map((route, i) => (
+                            <Route key={i} path={route.path} element={route.element} />
                         ))}
                 </Route>
 

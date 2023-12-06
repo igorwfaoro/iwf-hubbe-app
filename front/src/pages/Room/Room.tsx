@@ -74,8 +74,8 @@ export default function Room({}: RoomProps) {
     };
 
     return (
-        <Page className="flex flex-col items-center">
-            <Card className="w-[95%] md:w-[85%] lg:w-[70%]">
+        <Page>
+            <Card className="w-full">
                 {loading ? (
                     renderLoading()
                 ) : (
@@ -84,11 +84,18 @@ export default function Room({}: RoomProps) {
                             style={{ backgroundImage: `url(${room?.image})` }}
                             className="w-full h-64 rounded-t-2xl bg-center bg-cover"
                         />
-                        <div className="space-y-2 p-4">
-                            <Page.Title>{room?.name}</Page.Title>
-                            <Page.Subtitle>{room?.description}</Page.Subtitle>
+                        <div className="space-y-5 p-4">
+                            <div className="space-y-2">
+                                <Page.Title>{room?.name}</Page.Title>
+                                <Page.Subtitle>{room?.description}</Page.Subtitle>
+                            </div>
 
-                            <div dangerouslySetInnerHTML={{ __html: room?.content! }} />
+                            <div className='w-full border-b border-gray-300' />
+
+                            <div
+                                className="prose"
+                                dangerouslySetInnerHTML={{ __html: room?.content! }}
+                            />
                         </div>
                     </>
                 )}

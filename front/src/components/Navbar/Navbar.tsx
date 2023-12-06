@@ -27,9 +27,9 @@ export default function Navbar({}: NavbarProps) {
         auth.logout({ redirect: true }).finally(() => loader.hide());
     };
 
-    const title = 'IWF Hubbe App';
+    const title = 'IWF Rooms App';
     const isLogged = auth.isLogged();
-    const userName = auth.getLoggedUser()?.fullName;
+    const userName = auth.getLoggedUser()?.username;
 
     return (
         <nav className="fixed w-full h-14 bg-primary flex items-center justify-between px-4 z-[9999]">

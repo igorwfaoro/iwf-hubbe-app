@@ -4,6 +4,7 @@ import { twMerge } from 'tailwind-merge';
 interface PageProps {
     children?: ReactNode;
     className?: string;
+    wrapperClassName?: string;
 }
 
 interface PageTitleProps {
@@ -16,8 +17,12 @@ interface PageSubtitleProps {
     className?: string;
 }
 
-export default function Page({ children, className }: PageProps) {
-    return <div className={twMerge('p-4 pt-20', className)}>{children}</div>;
+export default function Page({ children, className, wrapperClassName }: PageProps) {
+    return (
+        <div className={twMerge('p-4 pt-20 flex flex-col items-center', wrapperClassName)}>
+            <div className={twMerge('w-[95%] md:w-[85%] lg:w-[70%]', className)}>{children}</div>
+        </div>
+    );
 }
 
 function PageTitle({ children, className }: PageTitleProps) {
