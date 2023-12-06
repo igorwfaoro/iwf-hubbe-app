@@ -9,7 +9,7 @@ export interface IAuthProvider {
     getLoggedUser: () => User | undefined;
     login: (params: LoginDto) => Promise<void>;
     refresh: () => void;
-    logout: () => Promise<void>;
+    logout: (options?: { redirect?: boolean }) => Promise<void>;
 }
 
 interface AuthProviderProps {
@@ -55,10 +55,11 @@ const AuthProvider = (props: AuthProviderProps) => {
         });
     };
 
-    const logout = (): Promise<void> => {
+    const logout = ({ redirect }: { redirect?: boolean } = {}): Promise<void> => {
         return new Promise((resolve) => {
             setTimeout(() => {
                 storage.clearData();
+                redirect && (window.location.href = '/login');
                 resolve();
             }, 1000);
         });

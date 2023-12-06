@@ -20,7 +20,7 @@ export const createStorage = () => {
     const getData = (): Partial<AppDataStorage> => data;
 
     const setData = (newData: Partial<AppDataStorage>): void => {
-        data = newData;
+        data = newData || '{}';
         localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     };
 

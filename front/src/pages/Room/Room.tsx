@@ -17,13 +17,10 @@ export default function Room({}: RoomProps) {
     const { id: roomId } = useParams();
 
     const toast = useToast();
-    const auth = useAuth();
     const roomService = createRoomService();
 
     const [loading, setLoading] = useState(false);
     const [room, setRoom] = useState<RoomDetail>();
-
-    let socket;
 
     useEffect(() => {
         getRoom();
@@ -57,18 +54,22 @@ export default function Room({}: RoomProps) {
 
     const renderLoading = () => {
         return (
-            <div className="space-y-2">
-                <Skeleton className="h-7 w-[70%] md:w-[30%]" />
-                <Skeleton className="h-5 w-[50%] md:w-[20%]" />
+            <>
+                <Skeleton className="w-full h-64 rounded-t-2xl" />
 
-                {Array.from({ length: 4 }).map((_, i) => (
-                    <Skeleton
-                        key={i}
-                        className="h-4"
-                        style={{ width: `${30 + Math.random() * 30}%` }}
-                    />
-                ))}
-            </div>
+                <div className="space-y-3 p-4">
+                    <Skeleton className="h-7 w-[70%] md:w-[30%]" />
+                    <Skeleton className="h-5 w-[50%] md:w-[20%]" />
+
+                    {Array.from({ length: 3 }).map((_, i) => (
+                        <Skeleton
+                            key={i}
+                            className="h-3"
+                            style={{ width: `${30 + Math.random() * 30}%` }}
+                        />
+                    ))}
+                </div>
+            </>
         );
     };
 
@@ -84,8 +85,8 @@ export default function Room({}: RoomProps) {
                             className="w-full h-64 rounded-t-2xl bg-center bg-cover"
                         />
                         <div className="space-y-2 p-4">
-                            <h1 className="text-3xl font-bold">{room?.name}</h1>
-                            <h2 className="text-xl">{room?.description}</h2>
+                            <Page.Title>{room?.name}</Page.Title>
+                            <Page.Subtitle>{room?.description}</Page.Subtitle>
 
                             <div dangerouslySetInnerHTML={{ __html: room?.content! }} />
                         </div>

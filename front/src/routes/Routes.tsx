@@ -6,6 +6,35 @@ import Navbar from '../components/Navbar/Navbar';
 import Home from '../pages/Home/Home';
 import RoomRoute from './wrappers/RoomRoute';
 import Room from '../pages/Room/Room';
+import About from '../pages/About/About';
+import { ReactNode } from 'react';
+
+const routes: { path: string; type: 'private' | 'public'; element: ReactNode }[] = [
+    {
+        path: '/login',
+        type: 'public',
+        element: <Login />
+    },
+    {
+        path: '/home',
+        type: 'private',
+        element: <Home />
+    },
+    {
+        path: '/room/:id',
+        type: 'private',
+        element: (
+            <RoomRoute>
+                <Room />
+            </RoomRoute>
+        )
+    },
+    {
+        path: '/about',
+        type: 'private',
+        element: <About />
+    }
+];
 
 const Routes = () => {
     return (
@@ -13,20 +42,19 @@ const Routes = () => {
             <Navbar />
             <BrowserRoutes>
                 <Route element={<PrivateRoute />}>
-                    <Route path="/home" element={<Home />} />
-
-                    <Route
-                        path="/room/:id"
-                        element={
-                            <RoomRoute>
-                                <Room />
-                            </RoomRoute>
-                        }
-                    />
+                    {routes
+                        .filter((route) => route.type === 'private')
+                        .map((route) => (
+                            <Route path={route.path} element={route.element} />
+                        ))}
                 </Route>
 
                 <Route element={<PublicRoute />}>
-                    <Route path="/login" element={<Login />} />
+                    {routes
+                        .filter((route) => route.type === 'public')
+                        .map((route) => (
+                            <Route path={route.path} element={route.element} />
+                        ))}
                 </Route>
 
                 <Route path="/" element={<Navigate to="/home" replace />} />

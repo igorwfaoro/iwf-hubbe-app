@@ -16,7 +16,7 @@ const button = tv({
     }
 });
 
-type ButtonProps = ComponentProps<'button'> &
+export type ButtonProps = ComponentProps<'button'> &
     VariantProps<typeof button> & {
         icon?: any;
         link?: string;
