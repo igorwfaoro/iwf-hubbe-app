@@ -1,4 +1,4 @@
-import { CSSProperties, ComponentProps, HTMLAttributeAnchorTarget } from 'react';
+import { ComponentProps } from 'react';
 import { tv, VariantProps } from 'tailwind-variants';
 
 const button = tv({
@@ -16,43 +16,14 @@ const button = tv({
     }
 });
 
-export type ButtonProps = ComponentProps<'button'> &
-    VariantProps<typeof button> & {
-        icon?: any;
-        link?: string;
-        linkTarget?: HTMLAttributeAnchorTarget;
-        color?: string;
-    };
+export type ButtonProps = ComponentProps<'button'> & VariantProps<typeof button>;
 
-export default function Button({
-    children,
-    icon: Icon,
-    link,
-    linkTarget,
-    theme,
-    onClick,
-    disabled,
-    className,
-    color,
-    style
-}: ButtonProps) {
-    const content = (
-        <>
-            {Icon && <Icon />} {children}
-        </>
-    );
-
+export default function Button({ children, theme, onClick, disabled, className }: ButtonProps) {
     const buttonClasses = button({ theme, className });
 
-    const buttonStyle: CSSProperties = { ...style, backgroundColor: color };
-
-    return link ? (
-        <a className={buttonClasses} style={buttonStyle} href={link} target={linkTarget}>
-            {content}
-        </a>
-    ) : (
-        <button className={buttonClasses} style={buttonStyle} onClick={onClick} disabled={disabled}>
-            {content}
+    return (
+        <button className={buttonClasses} onClick={onClick} disabled={disabled}>
+            {children}
         </button>
     );
 }

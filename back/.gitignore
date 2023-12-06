@@ -4,3 +4,4 @@ yarn.lock
 .npm
 .env
 dist
+/package-lock.json

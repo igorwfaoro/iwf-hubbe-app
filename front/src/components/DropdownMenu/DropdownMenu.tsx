@@ -30,7 +30,10 @@ export default function DropdownMenu({ label, className, items }: DropdownMenuPr
             {isOpen && (
                 <>
                     {/* items */}
-                    <div className="absolute top-14 bg-white shadow-md flex flex-col rounded-md border border-gray-200 z-50">
+                    <div
+                        role="menu"
+                        className="absolute top-14 bg-white shadow-md flex flex-col rounded-md border border-gray-200 z-50"
+                    >
                         {items?.map((item, i) => (
                             <button
                                 key={i}
