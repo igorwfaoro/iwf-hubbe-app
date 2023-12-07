@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { validateInput } from '../middlewares/validate-input';
 import { createRoomService } from '../services/room/room.service';
 import { roomValidator } from '../validators/room.validator';
-import { checkHttpToken } from '../middlewares/check-token';
+import { checkHttpToken } from '../middlewares/check-token/check-token';
 import { TokenHelper } from '../util/helpers/token/token.helper';
 
 const RoomController = Router();

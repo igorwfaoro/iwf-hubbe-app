@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { validateInput } from '../middlewares/validate-input';
 import { authValidator } from '../validators/auth.validator';
-import { checkHttpToken } from '../middlewares/check-token';
+import { checkHttpToken } from '../middlewares/check-token/check-token';
 import { TokenHelper } from '../util/helpers/token/token.helper';
 import { createAuthService } from '../services/auth/auth.service';
 
