@@ -2,7 +2,7 @@ import { Server } from 'socket.io';
 import { DefaultEventsMap } from 'socket.io/dist/typed-events';
 import { checkSocketToken } from './middlewares/check-token';
 import { SocketEvent } from './util/enums/socket-event';
-import { createRoomService } from './services/room.service';
+import { createRoomService } from './services/room/room.service';
 import { AccessRoomInputModel } from './models/input-models/access-room.input-model';
 
 export const createSocketEvents = (

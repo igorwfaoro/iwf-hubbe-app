@@ -4,7 +4,7 @@ import { ENV } from '../env';
 import { AuthException } from '../util/exceptions/auth.exception';
 import { Socket } from 'socket.io';
 import { DefaultEventsMap } from 'socket.io/dist/typed-events';
-import { TokenPayload } from '../util/helpers/token.helper';
+import { TokenPayload } from '../util/helpers/token/token.helper';
 
 const checkToken = (token: string): TokenPayload => {
     try {

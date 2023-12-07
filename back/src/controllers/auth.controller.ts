@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { createAuthService } from '../services/auth.service';
 import { validateInput } from '../middlewares/validate-input';
 import { authValidator } from '../validators/auth.validator';
-import { TokenHelper } from '../util/helpers/token.helper';
 import { checkHttpToken } from '../middlewares/check-token';
+import { TokenHelper } from '../util/helpers/token/token.helper';
+import { createAuthService } from '../services/auth/auth.service';
 
 const AuthController = Router();
 

@@ -1,9 +1,9 @@
-import { prisma } from '../database/db';
-import { NotFoundException } from '../util/exceptions/not-found.exception';
-import { RoomIsBlockedViewModel } from '../models/view-models/room-is-blocked.view-model';
-import { RoomViewModel } from '../models/view-models/room.view-model';
-import { RoomDetailViewModel } from '../models/view-models/room-detail.view-model';
-import { RoomIsBlockedException } from '../util/exceptions/room-is-blocked.exception';
+import { prisma } from '../../database/db';
+import { NotFoundException } from '../../util/exceptions/not-found.exception';
+import { RoomIsBlockedViewModel } from '../../models/view-models/room-is-blocked.view-model';
+import { RoomViewModel } from '../../models/view-models/room.view-model';
+import { RoomDetailViewModel } from '../../models/view-models/room-detail.view-model';
+import { RoomIsBlockedException } from '../../util/exceptions/room-is-blocked.exception';
 
 export const createRoomService = () => {
     const getAll = async (): Promise<RoomViewModel[]> => {

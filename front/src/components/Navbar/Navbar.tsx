@@ -6,7 +6,7 @@ import { useLoader } from '../../contexts/LoaderContext';
 
 interface NavbarProps {}
 
-const menus: { label: string; path: string }[] = [
+export const NAVBAR_MENUS: { label: string; path: string }[] = [
     {
         label: 'Home',
         path: '/home'
@@ -39,7 +39,7 @@ export default function Navbar({}: NavbarProps) {
             {isLogged && (
                 <>
                     <ul className="flex gap-3 text-white">
-                        {menus.map((menu, i) => (
+                        {NAVBAR_MENUS.map((menu, i) => (
                             <li
                                 key={i}
                                 className={classNames({

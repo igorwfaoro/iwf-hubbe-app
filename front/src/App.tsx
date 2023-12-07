@@ -1,7 +1,6 @@
-import ProviderComposer from './components/ProviderComposer';
+import ProviderComposer from './components/ProviderComposer/ProviderComposer';
 import AuthProvider from './contexts/AuthContext';
 import LoaderProvider from './contexts/LoaderContext';
-import ModalProvider from './contexts/ModalContext';
 import ToastProvider from './contexts/ToastContext';
 import Routes from './routes/Routes';
 import { createStorage } from './core/storage';
@@ -15,8 +14,7 @@ const App = () => {
                 components={[
                     { Component: AuthProvider },
                     { Component: ToastProvider },
-                    { Component: LoaderProvider },
-                    { Component: ModalProvider }
+                    { Component: LoaderProvider }
                 ]}
             >
                 <Routes />

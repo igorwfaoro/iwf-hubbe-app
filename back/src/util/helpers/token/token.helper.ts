@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import { UserViewModel } from '../../models/view-models/user.view-model';
+import { UserViewModel } from '../../../models/view-models/user.view-model';
 
 export interface TokenPayload {
     user: UserViewModel;

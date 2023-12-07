@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { AuthController } from './controllers/auth.controller';
 import { API_NAME, API_V1 } from './static/constants';
 import { RoomController } from './controllers/room.controller';
+import { AuthController } from './controllers/auth.controller';
 
 const routes = Router();
 

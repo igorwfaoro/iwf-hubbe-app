@@ -16,10 +16,6 @@ export abstract class StringHelper {
         return value.replace(/[^0-9\\.]+/g, '');
     }
 
-    public static normalize(value: string): string {
-        return value?.replace(/^\s*\(.*\)\s*/, '').trim();
-    }
-
     public static isContentEmpty(content: string): boolean {
         if (!content || content.trim() === '') {
             return true;

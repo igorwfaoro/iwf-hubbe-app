@@ -1,11 +1,11 @@
-import { TokenPayload } from '../util/helpers/token.helper';
+import { TokenPayload } from '../../util/helpers/token/token.helper';
 import jwt from 'jsonwebtoken';
-import { UserViewModel } from '../models/view-models/user.view-model';
-import { ENV } from '../env';
-import { prisma } from '../database/db';
-import { LoginInputModel } from '../models/input-models/login.input-model';
-import { AuthException } from '../util/exceptions/auth.exception';
-import { AuthViewModel } from '../models/view-models/auth.view-model';
+import { UserViewModel } from '../../models/view-models/user.view-model';
+import { ENV } from '../../env';
+import { prisma } from '../../database/db';
+import { LoginInputModel } from '../../models/input-models/login.input-model';
+import { AuthException } from '../../util/exceptions/auth.exception';
+import { AuthViewModel } from '../../models/view-models/auth.view-model';
 import { User } from '@prisma/client';
 
 export const createAuthService = () => {

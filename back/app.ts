@@ -3,7 +3,7 @@ require('dotenv').config();
 import express from 'express';
 import cors from 'cors';
 import { routes } from './src/routes';
-import { onError } from './src/util/functions/on-error';
+import { onError } from './src/util/functions/error/on-error';
 import { ENV } from './src/env';
 import { createServer } from 'node:http';
 import { Server } from 'socket.io';
