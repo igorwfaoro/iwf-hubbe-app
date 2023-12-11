@@ -13,20 +13,19 @@ interface InputProps {
 }
 
 export default function Input({
-    // label,
-    // className,
-    // labelClassName,
-    // inputClassName,
-    // errorMessage,
-    // errorMessageClassName,
-    // helpText,
-    // onChange,
-    // value
+    label,
+    className,
+    labelClassName,
+    inputClassName,
+    errorMessage,
+    errorMessageClassName,
+    helpText,
+    onChange,
+    value
 }: InputProps) {
     return (
-        // <div className={twMerge('mb-4 flex flex-col gap-1', className)}>
-        <div className="fixed">
-            {/* <label className={twMerge('text-gray-700 text-sm mb-1', labelClassName)}>{label}</label>
+        <div className={twMerge('mb-4 flex flex-col gap-1', className)}>
+            <label className={twMerge('text-gray-700 text-sm mb-1', labelClassName)}>{label}</label>
             {helpText && <small className="text-neutral-500">{helpText}</small>}
             <input
                 className={twMerge(
@@ -40,9 +39,7 @@ export default function Input({
                 <span className={twMerge('text-sm text-red-600', errorMessageClassName)}>
                     {errorMessage}
                 </span>
-            )} */}
-
-            <h1>ddd</h1>
+            )}
         </div>
     );
 }

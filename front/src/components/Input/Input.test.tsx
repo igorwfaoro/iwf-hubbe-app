@@ -25,31 +25,25 @@ describe('Input Component', () => {
         expect(getByText(errorMessage)).toBeInTheDocument();
     });
 
-//     // TODO: test
-//     it('should apply custom classNames', () => {
-//         const { container } = render(
-//             <Input
-//                 label="Name"
-//                 // className="custom-container-class"
-//                 // labelClassName="custom-label-class"
-//                 // inputClassName="custom-input-class"
-//                 // errorMessageClassName="custom-error-class"
-//                 // errorMessage="Error"
-//             />
-//         );
+    it('should apply custom classNames', () => {
+        const { container } = render(
+            <Input
+                label="Name"
+                className="custom-container-class"
+                labelClassName="custom-label-class"
+                inputClassName="custom-input-class"
+                errorMessageClassName="custom-error-class"
+                errorMessage="Error"
+            />
+        );
 
-//         // const inputElement = containerElement.querySelector('input');
-//         // const labelElement = containerElement.querySelector('.custom-label-class');
-//         // const errorMessageElement = containerElement.querySelector('.custom-error-class');
-// console.log(container.getElementsByClassName('fixed'))
-
-//         expect(container.className).toContain('fixed');
-//         // expect(container).toHaveClass('custom-container-class');
-
-//         // expect(labelElement).toHaveClass('custom-label-class');
-//         // expect(inputElement).toHaveClass('custom-input-class');
-//         // expect(errorMessageElement).toHaveClass('custom-error-class');
-//     });
+        [
+            'custom-container-class',
+            'custom-label-class',
+            'custom-input-class',
+            'custom-error-class'
+        ].forEach((className) => expect(container.innerHTML.includes(className)).toBeTruthy());
+    });
 
     it('should trigger onChange when input value changes', () => {
         const onChangeMock = jest.fn();
