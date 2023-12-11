@@ -37,11 +37,11 @@ export const createRoomService = () => {
     };
 
     const setCurrentUser = async (
-        id: string,
+        roomId: string,
         userId: string | null
     ): Promise<RoomDetailViewModel> => {
         const room = await prisma.room.findUnique({
-            where: { id }
+            where: { id: roomId }
         });
 
         if (!room) throw new NotFoundException();
@@ -54,7 +54,7 @@ export const createRoomService = () => {
             // if room.currentUserId is not equal userId then define it
             if (room.currentUserId !== userId) {
                 await prisma.room.update({
-                    where: { id },
+                    where: { id: roomId },
                     data: {
                         currentUserId: userId
                     }

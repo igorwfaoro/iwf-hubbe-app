@@ -25,31 +25,31 @@ describe('Input Component', () => {
         expect(getByText(errorMessage)).toBeInTheDocument();
     });
 
-    // TODO: test
-    // it('should apply custom classNames', () => {
-    //     const { container } = render(
-    //         <Input
-    //             label="Name"
-    //             className="custom-container-class"
-    //             // labelClassName="custom-label-class"
-    //             // inputClassName="custom-input-class"
-    //             // errorMessageClassName="custom-error-class"
-    //             // errorMessage="Error"
-    //         />
-    //     );
+//     // TODO: test
+//     it('should apply custom classNames', () => {
+//         const { container } = render(
+//             <Input
+//                 label="Name"
+//                 // className="custom-container-class"
+//                 // labelClassName="custom-label-class"
+//                 // inputClassName="custom-input-class"
+//                 // errorMessageClassName="custom-error-class"
+//                 // errorMessage="Error"
+//             />
+//         );
 
-    //     console.log(container.classList, container.innerHTML)
+//         // const inputElement = containerElement.querySelector('input');
+//         // const labelElement = containerElement.querySelector('.custom-label-class');
+//         // const errorMessageElement = containerElement.querySelector('.custom-error-class');
+// console.log(container.getElementsByClassName('fixed'))
 
-    //     // const inputElement = containerElement.querySelector('input');
-    //     // const labelElement = containerElement.querySelector('.custom-label-class');
-    //     // const errorMessageElement = containerElement.querySelector('.custom-error-class');
+//         expect(container.className).toContain('fixed');
+//         // expect(container).toHaveClass('custom-container-class');
 
-    //     // expect(container.className).toContain('custom-container-class');
-    //     expect(container).toHaveClass('custom-container-class');
-    //     // expect(labelElement).toHaveClass('custom-label-class');
-    //     // expect(inputElement).toHaveClass('custom-input-class');
-    //     // expect(errorMessageElement).toHaveClass('custom-error-class');
-    // });
+//         // expect(labelElement).toHaveClass('custom-label-class');
+//         // expect(inputElement).toHaveClass('custom-input-class');
+//         // expect(errorMessageElement).toHaveClass('custom-error-class');
+//     });
 
     it('should trigger onChange when input value changes', () => {
         const onChangeMock = jest.fn();

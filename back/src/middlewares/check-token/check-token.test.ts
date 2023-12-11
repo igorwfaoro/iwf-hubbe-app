@@ -8,10 +8,10 @@ import { Handshake } from 'socket.io/dist/socket';
 
 const jwt = require('jsonwebtoken');
 
-const mockJwtSecret = '2cbc8940-8316-55d2-b82b-499e6bc406d9>';
+const mockJwtSecret = '1d940593-eafc-4bef-bae7-3f853ecbf8b4';
 
 const mockToken =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjU2ZjUyOTc4MmU4ZWNmMzFiYTgxOGI5IiwidXNlcm5hbWUiOiJzcG9uZ2Vib2IiLCJmdWxsTmFtZSI6IlNwb25nZUJvYiBTcXVhcmVQYW50cyJ9LCJpYXQiOjE3MDE4ODUzOTcsImV4cCI6MTczMzQ0Mjk5N30.J-FEQw4kAK33FkJrpi65SjQdvaEpevCeYwkhyV40Bg0';
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjU2ZjUyOTc4MmU4ZWNmMzFiYTgxOGI5IiwidXNlcm5hbWUiOiJzcG9uZ2Vib2IiLCJmdWxsTmFtZSI6IlNwb25nZUJvYiBTcXVhcmVQYW50cyJ9LCJpYXQiOjE3MDIzMjUwMDAsImV4cCI6NDg1ODA4NTAwMH0.HTxvkpD4OncNQEOaOIY9M0xilUZHmrxzkGIJNmCEnKw';
 
 const mockTokenPayload: TokenPayload = {
     user: {
@@ -22,17 +22,22 @@ const mockTokenPayload: TokenPayload = {
 };
 
 jest.mock('jsonwebtoken', () => ({
-    verify: jest.fn()
+    verify: jest.fn().mockReturnValue({
+        user: {
+            id: '656f529782e8ecf31ba818b9',
+            username: 'testUser',
+            fullName: 'Test User'
+        }
+    })
 }));
 
 jest.mock('../../env', () => ({
     ENV: {
-        JWT_SECRET: '2cbc8940-8316-55d2-b82b-499e6bc406d9>'
+        JWT_SECRET: '1d940593-eafc-4bef-bae7-3f853ecbf8b4'
     }
 }));
 
 describe('HTTP Authentication Middleware', () => {
-
     beforeEach(() => {
         jest.clearAllMocks();
     });
@@ -48,48 +53,44 @@ describe('HTTP Authentication Middleware', () => {
 
         const mockResponse: Partial<Response> = {
             locals: {
-                jwtPayload: {}
+                jwtPayload: undefined
             }
         };
 
         checkHttpToken(mockRequest as Request, mockResponse as Response, next);
 
         expect(jwt.verify).toHaveBeenCalledWith(mockToken, mockJwtSecret);
-
-        // TODO: test
-        // expect(mockResponse.locals!.jwtPayload).toEqual(mockTokenPayload);
-
+        expect(mockResponse.locals!.jwtPayload).toEqual(mockTokenPayload);
         expect(next).toHaveBeenCalled();
     });
 
-    // it('should call the next function with an error for an invalid token', () => {
-    //     const next = jest.fn();
+    it('should call the next function with an error for an invalid token', () => {
+        const next = jest.fn();
 
-    //     const mockRequest: Partial<Request> = {
-    //         headers: {
-    //             authorization: 'Bearer invalid-token'
-    //         }
-    //     };
+        const mockRequest: Partial<Request> = {
+            headers: {
+                authorization: 'Bearer invalid-token'
+            }
+        };
 
-    //     const mockResponse: Partial<Response> = {
-    //         locals: {
-    //             jwtPayload: {}
-    //         }
-    //     };
+        const mockResponse: Partial<Response> = {
+            locals: {
+                jwtPayload: undefined
+            }
+        };
 
-    //     jwt.verify.mockImplementation(() => {
-    //         throw new Error('Invalid token');
-    //     });
+        jwt.verify.mockImplementationOnce(() => {
+            throw new Error('Invalid token');
+        });
 
-    //     checkHttpToken(mockRequest as Request, mockResponse as Response, next);
+        checkHttpToken(mockRequest as Request, mockResponse as Response, next);
 
-    //     expect(next).toHaveBeenCalledWith(new AuthException());
-    // });
+        expect(next).toHaveBeenCalledWith(expect.any(AuthException));
+        expect(mockResponse.locals.jwtPayload).toBeUndefined();
+    });
 });
 
 describe('WebSocket Authentication Middleware', () => {
-
-
     beforeEach(() => {
         jest.clearAllMocks();
     });
@@ -102,14 +103,12 @@ describe('WebSocket Authentication Middleware', () => {
                 }
             } as Partial<Handshake> as Handshake
         };
-
+    
         const payload = checkSocketToken(
             socket as Socket<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>
         );
-
+    
         expect(jwt.verify).toHaveBeenCalledWith(mockToken, mockJwtSecret);
-
-        // TODO: test
-        // expect(payload).toEqual(mockTokenPayload);
+        expect(payload).toEqual(mockTokenPayload);
     });
 });

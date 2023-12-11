@@ -8,7 +8,6 @@ import { TokenPayload } from '../../util/helpers/token/token.helper';
 
 const checkToken = (token: string): TokenPayload => {
     try {
-        console.log(token)
         return <any>jwt.verify(token.split(' ')[1], ENV.JWT_SECRET);
     } catch (error) {
         throw new AuthException();

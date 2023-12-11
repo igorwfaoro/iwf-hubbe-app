@@ -40,7 +40,7 @@ describe('createRoomService', () => {
     let mockRooms: Room[] = getMockRooms();
     let mockRoom: Room = getMockRooms()[0];
 
-    afterEach(() => {
+    beforeEach(() => {
         jest.clearAllMocks();
         mockRooms = getMockRooms();
         mockRoom = getMockRooms()[0];
@@ -106,23 +106,21 @@ describe('createRoomService', () => {
         }).rejects.toThrowError(NotFoundException);
     });
 
-    // TODO: test
-    // it('setCurrentUser should update currentUserId if the room is secret', async () => {
-    //     mockRoom = { ...mockRoom, isSecret: true, currentUserId: null };
+    it('setCurrentUser should update currentUserId if the room is secret and not blocked', async () => {
+        mockRoom = { ...mockRoom, isSecret: true, currentUserId: null };
 
-    //     jest.spyOn(prisma.room, 'findUnique').mockResolvedValue(mockRoom);
-    //     const updateSpy = jest.spyOn(prisma.room, 'update');
+        jest.spyOn(prisma.room, 'findUnique').mockResolvedValue(mockRoom);
+        const updateSpy = jest.spyOn(prisma.room, 'update').mockResolvedValue(mockRoom);
 
-    //     const result = await roomService.setCurrentUser(mockRoom.id, userId);
+        await roomService.setCurrentUser(mockRoom.id, userId);
 
-    //     expect(updateSpy).toHaveBeenCalledWith({
-    //         where: { id: mockRoom.id },
-    //         data: {
-    //             currentUserId: userId
-    //         }
-    //     });
-    //     expect(result).toEqual(RoomDetailViewModel.fromModel(mockRoom));
-    // });
+        expect(updateSpy).toHaveBeenCalledWith({
+            where: { id: mockRoom.id },
+            data: {
+                currentUserId: userId
+            }
+        });
+    });
 
     it('setCurrentUser should throw RoomIsBlockedException if the room is secret and already blocked', async () => {
         mockRoom = {
@@ -137,28 +135,6 @@ describe('createRoomService', () => {
             await roomService.setCurrentUser(mockRoom.id, userId);
         }).rejects.toThrowError(RoomIsBlockedException);
     });
-
-    // TODO: test
-    // it('setCurrentUser should not throw RoomIsBlockedException if the room is secret and not blocked', async () => {
-    //     mockRoom = {
-    //         ...mockRoom,
-    //         isSecret: true,
-    //         currentUserId: null
-    //     };
-
-    //     jest.spyOn(prisma.room, 'findUnique').mockResolvedValue(mockRoom);
-    //     const updateSpy = jest.spyOn(prisma.room, 'update');
-
-    //     const result = await roomService.setCurrentUser(mockRoom.id, userId);
-
-    //     expect(updateSpy).toHaveBeenCalledWith({
-    //         where: { id: mockRoom.id },
-    //         data: {
-    //             currentUserId: userId
-    //         }
-    //     });
-    //     expect(result).toEqual(mockRoom);
-    // });
 
     it('removeUserFromRooms should update currentUserId to null for multiple rooms', async () => {
         mockRooms[0].currentUserId = userId;
