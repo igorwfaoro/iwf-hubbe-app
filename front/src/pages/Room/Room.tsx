@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useToast } from '../../contexts/ToastContext';
-import { createRoomService } from '../../services/room.service';
+import { createRoomService } from '../../services/room/room.service';
 import { RoomDetail } from '../../models/api/room-detail';
 import { useParams } from 'react-router-dom';
 import { mapHttpError } from '../../core/http';

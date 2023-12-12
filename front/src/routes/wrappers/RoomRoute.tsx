@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { createRoomService } from '../../services/room.service';
+import { createRoomService } from '../../services/room/room.service';
 import { useToast } from '../../contexts/ToastContext';
 import { useLoader } from '../../contexts/LoaderContext';
 import { RoomIsBlocked } from '../../models/api/room-is-blocked';

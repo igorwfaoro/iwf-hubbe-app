@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { ShieldAlert as IconShield } from 'lucide-react';
 import { useLoader } from '../../../../contexts/LoaderContext';
 import { useToast } from '../../../../contexts/ToastContext';
-import { createRoomService } from '../../../../services/room.service';
+import { createRoomService } from '../../../../services/room/room.service';
 import { Room } from '../../../../models/api/room';
 import { mapHttpError } from '../../../../core/http';
 import Card from '../../../../components/Card/Card';

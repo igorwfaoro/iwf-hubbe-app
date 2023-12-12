@@ -1,5 +1,5 @@
 import { createContext, useContext, useMemo } from 'react';
-import { createAuthService } from '../services/auth.service';
+import { createAuthService } from '../services/auth/auth.service';
 import { createStorage } from '../core/storage';
 import { User } from '../models/api/user';
 import { LoginDto } from '../models/dto/login.dto';

@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import Page from '../../components/Page/Page';
-import { useLoader } from '../../contexts/LoaderContext';
 import { useToast } from '../../contexts/ToastContext';
-import { createGithubService } from '../../services/github.service';
+import { createGithubService } from '../../services/github/github.service';
 import Markdown from 'react-markdown';
 
 interface AboutProps {}

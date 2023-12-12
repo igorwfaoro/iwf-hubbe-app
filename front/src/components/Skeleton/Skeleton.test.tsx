@@ -10,10 +10,9 @@ describe('Skeleton Component', () => {
         );
     });
 
-    // TODO: test
-    // it('should render the Skeleton component with custom className', () => {
-    //     const { container } = render(<Skeleton className="custom-class" />);
-    //     const skeletonElement = container.firstChild;
-    //     expect(skeletonElement).toHaveClass('custom-class');
-    // });
+    it('should render the Skeleton component with custom className', () => {
+        const { container } = render(<Skeleton className="custom-class" />);
+        const skeletonElement = container.firstChild;
+        expect(skeletonElement).toHaveClass('custom-class');
+    });
 });

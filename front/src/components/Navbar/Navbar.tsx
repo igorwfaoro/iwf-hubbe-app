@@ -54,7 +54,7 @@ export default function Navbar({}: NavbarProps) {
                         <DropdownMenu
                             label={userName}
                             className="bg-transparent p-0"
-                            items={[{ label: 'Logout', onClick: handleLogout }]}
+                            items={[{ label: 'Logout', onClick: () => handleLogout() }]}
                         />
                     </div>
                 </>

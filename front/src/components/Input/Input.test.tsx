@@ -37,12 +37,14 @@ describe('Input Component', () => {
             />
         );
 
-        [
-            'custom-container-class',
-            'custom-label-class',
-            'custom-input-class',
-            'custom-error-class'
-        ].forEach((className) => expect(container.innerHTML.includes(className)).toBeTruthy());
+        const inputElement = container.querySelector('input');
+        const labelElement = container.querySelector('.custom-label-class');
+        const errorMessageElement = container.querySelector('.custom-error-class');
+
+        expect(container.firstChild).toHaveClass('custom-container-class');
+        expect(inputElement).toHaveClass('custom-input-class');
+        expect(labelElement).toHaveClass('custom-label-class');
+        expect(errorMessageElement).toHaveClass('custom-error-class');
     });
 
     it('should trigger onChange when input value changes', () => {

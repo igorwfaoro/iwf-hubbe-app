@@ -12,25 +12,16 @@ describe('Page Component', () => {
         expect(content).toBeInTheDocument();
     });
 
-    // TODO: test
-    // it('should apply custom classNames to the Page component', () => {
-    //     const { container } = render(
-    //         <Page className="custom-page-class">
-    //             <p>Custom Page</p>
-    //         </Page>
-    //     );
-    //     expect(container.className).toContain('custom-page-class');
-    // });
+    it('should apply custom classNames to the Page component', () => {
+        const { container } = render(
+            <Page wrapperClassName="custom-wrapper-class" className="custom-page-class">
+                <p>Custom Page</p>
+            </Page>
+        );
 
-    // TODO: test
-    // it('should apply custom classNames to the Page wrapper', () => {
-    //     const { container } = render(
-    //         <Page wrapperClassName="custom-wrapper-class">
-    //             <p>Custom Wrapper</p>
-    //         </Page>
-    //     );
-    //     expect(container.querySelector('.custom-wrapper-class')).toBeInTheDocument();
-    // });
+        expect(container.firstChild).toHaveClass('custom-wrapper-class');
+        expect(container.firstChild?.firstChild).toHaveClass('custom-page-class');
+    });
 
     it('should render a Page Title', () => {
         const { getByText } = render(<Page.Title>Title Text</Page.Title>);
@@ -38,13 +29,12 @@ describe('Page Component', () => {
         expect(title).toBeInTheDocument();
     });
 
-    // TODO: test
-    // it('should apply custom classNames to the Page Title', () => {
-    //     const { container } = render(
-    //         <Page.Title className="custom-title-class">Custom Title</Page.Title>
-    //     );
-    //     expect(container.querySelector('.custom-title-class')).toBeInTheDocument();
-    // });
+    it('should apply custom classNames to the Page Title', () => {
+        const { container } = render(
+            <Page.Title className="custom-title-class">Custom Title</Page.Title>
+        );
+        expect(container.querySelector('.custom-title-class')).toBeInTheDocument();
+    });
 
     it('should render a Page Subtitle', () => {
         const { getByText } = render(<Page.Subtitle>Subtitle Text</Page.Subtitle>);
@@ -52,11 +42,11 @@ describe('Page Component', () => {
         expect(subtitle).toBeInTheDocument();
     });
 
-    // TODO: test
-    // it('should apply custom classNames to the Page Subtitle', () => {
-    //     const { container } = render(
-    //         <Page.Subtitle className="custom-subtitle-class">Custom Subtitle</Page.Subtitle>
-    //     );
-    //     expect(container.querySelector('.custom-subtitle-class')).toBeInTheDocument();
-    // });
+    it('should apply custom classNames to the Page Subtitle', () => {
+        const { container } = render(
+            <Page.Subtitle className="custom-subtitle-class">Custom Subtitle</Page.Subtitle>
+        );
+
+        expect(container.firstChild).toHaveClass('custom-subtitle-class');
+    });
 });

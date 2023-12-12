@@ -1,15 +1,21 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import Navbar, { NAVBAR_MENUS } from './Navbar';
+
+const mockLogout = jest.fn().mockResolvedValue(undefined);
+
+jest.mock('../../contexts/LoaderContext', () => ({
+    useLoader: jest.fn(() => ({
+        show: jest.fn(),
+        hide: jest.fn()
+    }))
+}));
 
 jest.mock('../../contexts/AuthContext', () => ({
     useAuth: jest.fn(() => ({
         isLogged: () => true,
         getLoggedUser: () => ({ username: 'test-user' }),
-        logout: jest.fn().mockImplementation(() => {
-            console.log('##################################################### igor');
-            return Promise.resolve();
-        })
+        logout: mockLogout
     }))
 }));
 
@@ -37,29 +43,25 @@ describe('Navbar Component', () => {
         });
     });
 
-    // TODO: test
-    // it('should handle logout when user clicks on Logout', async () => {
-    //     //const { queryByText, getByText } =
-    //     render(
-    //         <MemoryRouter>
-    //             <Navbar />
-    //         </MemoryRouter>
-    //     );
+    it('should handle logout when user clicks on Logout', async () => {
+        const { queryByText, getByText } = render(
+            <MemoryRouter>
+                <Navbar />
+            </MemoryRouter>
+        );
 
-    //     // const logoutButton = queryByText('Logout');
-    //     // expect(logoutButton).toBeNull();
+        const logoutButton = queryByText('Logout');
+        expect(logoutButton).toBeNull();
 
-    //     // const dropdownUserButton = getByText('test-user');
-    //     // fireEvent.click(dropdownUserButton);
+        const dropdownUserButton = getByText('test-user');
+        fireEvent.click(dropdownUserButton);
 
-    //     await waitFor(() => {
-    //         // const logoutButton = queryByText('Logout');
-    //         // if (logoutButton) {
-    //         //     fireEvent.click(logoutButton);
-    //         // }
-    //         useAuth().logout()
-    //     });
+        const logoutButtonAfterDropdown = queryByText('Logout');
+        expect(logoutButtonAfterDropdown).toBeInTheDocument();
+        fireEvent.click(logoutButtonAfterDropdown?.firstChild!);
 
-    //     expect(useAuth().logout).toHaveBeenCalledTimes(1);
-    // });
+        await waitFor(() => expect(mockLogout).toHaveBeenCalled());
+
+        expect(mockLogout).toHaveBeenCalledTimes(1);
+    });
 });
